@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Phylowave</title>
+
+    <link rel="icon" href="logo/favicon/favicon-96x96.png" type="image/png">
+    <link rel="icon" type="image/png" href="logo/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="logo/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="logo/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="logo/favicon/apple-touch-icon.png" />
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    
+    <link rel="stylesheet" href="css/style.css" /> <!-- my own styles -->
+</head>
+    
+<body>
+  <div class="main-container d-flex">
+      
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar" id="side_nav">
+      <!-- Title -->  
+      <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-center align-items-center">
+          <div 
+               class="d-flex justify-content-center align-items-center bg-white shadow rounded"
+               style="height: 60px; width: 180px; position: relative;">
+            <img
+              src="logo/Logo_small.png"
+              alt="Logo"
+            style="height: 100%; width: 100%; object-fit: contain; position: relative" />
+          </div>
+        <button class="btn d-md-none d-block close-btn px-1 py-0 text-white"><i class="fal fa-stream"></i></button>
+      </div>
+      <!-- List of options --> 
+      <ul class="list-unstyled px-2">
+        <li class="inactive"> 
+            <a href="index.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-home"></i> Home </a> 
+        </li>
+        <hr class="h-color mx-2">
+        <li class="active"> 
+            <a href="examples.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-lightbulb"></i> Examples </a> 
+        </li>
+        <li class="inactive"> 
+            <a href="analysis.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-chart-bar"></i> Run your analysis </a> 
+        </li>
+        <li class="inactive"> 
+            <a href="about.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-info-circle"></i> About </a> 
+        </li>
+      </ul>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="content">
+      <div class="dashboard-content px-3">
+          <div id="analysis-panel" class="content-panel" style="display: block; margin-top: 25px;">
+                <h2>Explore examples of Phylowave dynamics.</h2>
+                <div class="feature-grid">
+                  <div class="feature-box" onclick="location.href='example_analysis/examples_sc2.html'">
+                    <div class="feature-icon"><i class="fal fa-angle-right"></i></div>
+                    <div>
+                      <h3>SARS-CoV-2</h3>
+                      <p> </p>
+                    </div>
+                  </div>
+
+                  <div class="feature-box" onclick="location.href='example_analysis/examples_h3n2.html'">
+                    <div class="feature-icon"><i class="fal fa-angle-right"></i></div>
+                    <div>
+                      <h3>H3N2</h3>
+                      <p> </p>
+                    </div>
+                  </div>
+
+                  <div class="feature-box" onclick="location.href='example_analysis/examples_bp.html'">
+                    <div class="feature-icon"><i class="fal fa-angle-right"></i></div>
+                    <div>
+                      <h3>B. pertussis</h3>
+                      <p> </p>
+                    </div>
+                  </div>
+
+                   <div class="feature-box" onclick="location.href='example_analysis/examples_tb.html'">
+                    <div class="feature-icon"><i class="fal fa-angle-right"></i></div>
+                    <div>
+                      <h3>M. tuberculosis</h3>
+                      <p> </p>
+                    </div>
+                  </div>
+                </div>
+          </div>
+      </div>
+    </div>  
+  </div>
+
+  <!-- External JS -->
+  <script src="https://unpkg.com/@phylocanvas/phylocanvas.gl@latest/dist/bundle.min.js"></script>
+  <script src="https://unpkg.com/phylojs@latest/lib/dist/phylojs.min.js"></script>
+  <script src='https://cdn.jsdelivr.net/gh/kdpsingh/rjs@master/r.js'></script>   
+  <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script> <!-- To compute the bandwidth -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- Select2 CSS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>   <!-- Select2 JS -->
+    
+  <script src="https://unpkg.com/@phylocanvas/phylocanvas.gl@latest/dist/bundle.min.js"></script>
+    
+</body>
+    
+</html>
+
+
+
+
+
