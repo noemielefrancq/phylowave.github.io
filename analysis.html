@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Phylowave</title>
+
+    <link rel="icon" href="logo/favicon/favicon-96x96.png" type="image/png">
+    <link rel="icon" type="image/png" href="logo/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="logo/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="logo/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="logo/favicon/apple-touch-icon.png" />
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    
+    <link rel="stylesheet" href="css/style.css" /> <!-- my own styles -->
+
+    <style>
+ 
+    </style>
+</head>
+    
+<body>
+  <div class="main-container d-flex">
+      
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar" id="side_nav">
+      <!-- Title -->  
+      <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-center align-items-center">
+          <div 
+               class="d-flex justify-content-center align-items-center bg-white shadow rounded"
+               style="height: 60px; width: 180px; position: relative;">
+            <img
+              src="logo/Logo_small.png"
+              alt="Logo"
+            style="height: 100%; width: 100%; object-fit: contain; position: relative" />
+          </div>
+        <button class="btn d-md-none d-block close-btn px-1 py-0 text-white"><i class="fal fa-stream"></i></button>
+      </div>
+      <!-- List of options --> 
+      <ul class="list-unstyled px-2">
+        <li class="inactive"> 
+            <a href="index.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-home"></i> Home </a> 
+        </li>
+        <hr class="h-color mx-2">
+        <li class="inactive"> 
+            <a href="examples.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-lightbulb"></i> Examples </a> 
+        </li>
+        <li class="active"> 
+            <a href="analysis.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-chart-bar"></i> Run your analysis </a> 
+        </li>
+        <li class="inactive"> 
+            <a href="about.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-info-circle"></i> About </a> 
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="content">
+      <div class="dashboard-content px-3">
+          <div id="analysis-panel" class="content-panel" style="display: block; margin-top: 25px;">
+            <h2>Run your Phylowave analysis</h2>
+            <hr class="h-color mx-2">
+
+            <!-- Data input -->
+            <h4>1 - Data input</h4>
+            <p>First, drag a *timed* tree file into the box below. </p>
+            
+            <!-- Tree format and drop -->
+            <div class="drop-zone-container">
+              <div class="drop-zone-item">
+                <label for="formFormat">Tree</label>
+                <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> Format: 
+                <select id="formFormatTree">
+                    <option value="newick">Newick</option>
+                    <option value="nexus">Nexus</option>
+                    <option value="phyloxml">PhyloXML</option>
+                    <option value="nexml">NeXML</option>
+                    <option value="phyjson">PhyJSON</option>
+                </select> </p>
+                <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> Make sure you select the right format. </p>
+                <div id="tree-drop-area">
+                  Drop tree file here
+                  <div id="tree-status-message"></div>
+                </div>
+              </div>
+
+              <!-- CSV format and drop -->
+
+              <div class="drop-zone-item">
+                <label for="formFormat">Tip metadata (optional)</label>
+                <div id="addmetadata", style="display: block; margin-top: 10px;">
+                    <button id="addMetadataBtn">Add Metadata</button>
+                </div>
+                  
+                 <div id="metadata-parser" style="display: none; margin-top: 10px;">
+                   <div class="metadata-inner">                       
+                    <div class="radio-group">
+                      <label class="radio-option">
+                        <input type="radio" name="metadataSource" value="tip">
+                        Parse from tip labels
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="metadataSource" value="csv">
+                        Parse from csv
+                      </label>
+                    </div>
+                    
+                    <!-- Option 1 -->
+                    <div id="metadata-option-tip">
+                        <!-- <p style="font-size: 14px; margin-top: 0px; margin-bottom: 1px;"> Option 1: Parse from tip labels </p> -->
+                        <div id="tip_name_example" style="font-size: 0.75rem; margin-bottom: 5px;"></div>
+
+                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
+                        Date format: 
+                        <select id="dateFormat">
+                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                            <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                            <option value="Decimal">Decimal date</option>
+                        </select> 
+                        Delimiter: 
+                        <input type="text" id="tipDelimiter" placeholder="_" value="_"> 
+                        </p>
+
+                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
+                            Date location: 
+                            <input type="number" id="dateLocation" placeholder="-1" value="-1"> 
+                            Group location: 
+                            <input type="number" id="groupLocation" placeholder="-2" value="-2"> 
+                        </p>
+                        <!-- <button id="parseTipsBtn">Parse Tips</button> -->    
+                    </div>   
+
+                    <!-- Option 2 -->
+                    <div id="metadata-option-csv" style="display: none;">
+                        <!--  <p style="font-size: 14px; margin-top: 0px; margin-bottom: 1px;"> Option 2: Parse from csv </p> -->
+
+                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
+                            Date format: 
+                            <select id="dateFormatCSV">
+                                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                                <option value="Decimal">Decimal date</option>
+                            </select> 
+                            Delimiter: 
+                            <select id="CSVDelimiter" style="width: 100px">
+                                <option value="Comma">,</option>
+                                <option value="Semicolon">;</option>
+                                <option value="Tab">\t</option>
+                                <option value="Pipe">|</option>
+                            </select>
+                        </p>
+                        
+                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
+                            Date column: 
+                            <input type="number" id="datecolumn" placeholder="2" value="2"> 
+                            Group colum: 
+                            <input type="number" id="groupcolumn" placeholder="3" value="3"> 
+                        </p>
+                        
+                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
+
+                        </p>
+                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> Make sure tip names are in the first column. </p>
+
+                        <div style="width: 100%; display: flex; justify-content: center;">
+                            <div id="csv-drop-area">
+                                Drop CSV file here
+                                <div id="csv-status-message"></div>  
+                            </div>
+                        </div>
+                    </div>
+                       
+                    <div id="parseMetadata", style="display: block; margin-top: 10px;">
+                        <button id="parseMetadataBtn">Parse metadata</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            
+            <br>
+            <!-- Parameters -->
+            <h4>2- Parameter input </h4>
+
+            <div class="form-container">
+                <!-- Input genome length  -->
+                <div class="form-group">
+                    <label for="genomelength">Genome length:</label>
+                    <input type="number" id="genomelength" name="genomelength" min="1" max="1000000000" step="100" value="1E6" />
+                    <p style="font-size: 12px;"> Unit: number of base pairs </p>
+                </div>
+
+                <!-- Input subtitution rate  -->
+                <div class="form-group">
+                    <label for="substitution_rate">Substitution rate:</label>
+                    <input type="number" id="substitution_rate" name="substitution_rate" min="0" max="1" step="0.01" value="1E-5" />
+                    <p style="font-size: 12px;"> Unit: substitutions per base pair per year </p>
+                </div>
+                
+                <!-- Input timescale  -->
+                <div class="form-group">
+                    <label for="Timescale">Timescale:</label>
+                    <input type="number" id="Timescale" name="Timescale" min="0" max="100" step="0.01" value="0.5" />
+                    <p style="font-size: 12px;"> Unit: years </p>
+                </div>
+                
+                <!-- Input window  -->
+                <div class="form-group">
+                    <label for="window">Window:</label>
+                    <input type="number" id="window" name="window" min="0" max="100" step="0.25" value="1" />
+                     <p style="font-size: 12px;"> Unit: years </p>
+                </div>
+            </div>
+              
+            <div class="center-button">
+              <button id="runBtn">Run analysis</button>
+              <div id="analysis-status-message"></div>
+              <div id="analysis-warning-message"></div>
+            </div>
+              
+            <h2>Result</h2>
+
+            <div id="tree-container">
+                <center>
+                    <p>Your tree will be plotted here.</p>
+                </center>
+            </div>
+              
+            <div id="color-legend" class="legend-container"> </div>
+
+            <div id="scatter-container">
+                <center>
+                    <p>Your index dynamics will be plotted here.</p>
+                </center>
+            </div>
+              
+            <div class="center-button">
+              <!-- <button id="resetLayoutBtn">Reset Layout</button> -->
+                
+              <button id="download-data-btn">Download phylowave dynamics as csv</button>
+            </div>
+              
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- External JS -->
+  <script src="https://unpkg.com/@phylocanvas/phylocanvas.gl@latest/dist/bundle.min.js"></script>
+  <script src="https://unpkg.com/phylojs@latest/lib/dist/phylojs.min.js"></script>
+  <script src='https://cdn.jsdelivr.net/gh/kdpsingh/rjs@master/r.js'></script>   
+  <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script> <!-- To compute the bandwidth -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- Select2 CSS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>   <!-- Select2 JS -->
+  <script src="https://d3js.org/d3-dsv.v3.min.js"></script> <!-- D3 library -->
+    
+  <script src="https://unpkg.com/@phylocanvas/phylocanvas.gl@latest/dist/bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.3/pako.min.js"></script>
+
+  
+  <!-- Drop down for the format options -->
+  <script>
+    $(document).ready(function() {
+      $('#formFormat').select2({
+        placeholder: 'Select a format',
+        allowClear: true,
+      });
+
+      // Reveal the select after Select2 initializes
+      $('#formFormat').css('visibility', 'visible');
+
+      // Optional: log selected value
+      $('#formFormat').on('change', function() {
+        // console.log('Selected format:', $(this).val());
+      });
+    });
+        
+  </script>    
+  <!-- Sidebar Toggle JS -->
+  <script>
+    $(".sidebar ul li").on('click', function () {
+      $(".sidebar ul li.active").removeClass('active');
+      $(this).addClass('active');
+    });
+    $('.open-btn').on('click', function () {
+      $('#side_nav').addClass('active');
+    });
+    $('.close-btn').on('click', function () {
+      $('#side_nav').removeClass('active');
+    });
+  </script>
+    
+    
+  <!-- Phylowave analysis -->
+  <script>
+        // Function to plot tree
+        function PlotTree(newickString) {
+            const container = document.querySelector("#tree-container");
+            container.innerHTML = ""; // Clear previous tree
+
+            tree = new phylocanvas.PhylocanvasGL(container, 
+              {
+                size: { width: 1000, height: 500 },
+                source: newickString,
+                type: phylocanvas.TreeTypes.Rectangular,
+                showLabels: true,
+                showLeafLabels: true,
+                interactive: true,
+
+            }
+            );
+        }
+        function renderFixedLegend() {
+            const legendContainer = document.getElementById("color-legend");
+            legendContainer.innerHTML = "";
+
+            const entries = [
+                { label: "Tips", color: "royalblue" },
+                { label: "Nodes", color: "grey" }
+            ];
+
+            entries.forEach(({ label, color }) => {
+                const item = document.createElement("div");
+                item.className = "legend-item";
+
+                const colorBox = document.createElement("div");
+                colorBox.className = "legend-color-box";
+                colorBox.style.backgroundColor = color;
+
+                const text = document.createElement("span");
+                text.textContent = label;
+
+                item.appendChild(colorBox);
+                item.appendChild(text);
+                legendContainer.appendChild(item);
+            });
+        }
+        function renderColorLegend(groupToColor) {
+          const legendContainer = document.getElementById("color-legend");
+          legendContainer.innerHTML = "Legend: "; // Clear previous legend
+            
+          for (const group in groupToColor) {
+            if(group != "Unknown"){
+                const color = groupToColor[group];
+
+                const item = document.createElement("div");
+                item.className = "legend-item";
+
+                const colorBox = document.createElement("div");
+                colorBox.className = "legend-color-box";
+                colorBox.style.backgroundColor = color;
+
+                const label = document.createElement("span");
+                label.textContent = group;
+
+                item.appendChild(colorBox);
+                item.appendChild(label);
+                legendContainer.appendChild(item);
+            }
+          }
+          // Add "Unknown" group if present
+          if ("Unknown" in groupToColor) {
+            const item = document.createElement("div");
+            item.className = "legend-item";
+
+            const colorBox = document.createElement("div");
+            colorBox.className = "legend-color-box";
+            colorBox.style.backgroundColor = groupToColor["Unknown"];
+
+            const label = document.createElement("span");
+            label.textContent = "Unknown";
+
+            item.appendChild(colorBox);
+            item.appendChild(label);
+            legendContainer.appendChild(item);
+          }
+          // Add static "Nodes" entry// Add static "Nodes" entry
+          const item = document.createElement("div");
+          item.className = "legend-item";
+
+          const colorBox = document.createElement("div");
+          colorBox.className = "legend-color-box";
+          colorBox.style.backgroundColor = "grey";
+
+          const label = document.createElement("span");
+          label.textContent = "Nodes";
+
+          item.appendChild(colorBox);
+          item.appendChild(label);
+          legendContainer.appendChild(item);
+        }
+        // Computes efficiently pairwise evolutionary distances using node heights in the tree
+        function computeDistancesFromTree(tree) {
+            const tips_and_nodes = tree.nodeList;
+            const n = tips_and_nodes.length;
+
+            // Cache node heights for quick access
+            const heights = tips_and_nodes.map(node => node.height);
+
+            // Build a map from node ID to ancestor chain (used for MRCA lookup)
+            const ancestorMap = new Map();
+            for (let node of tips_and_nodes) {
+                const ancestors = new Set();
+                let current = node;
+                while (current) {
+                    ancestors.add(current.id);
+                    current = current.parent;
+                }
+                ancestorMap.set(node.id, ancestors);
+            }
+
+            // Function to find MRCA height from two nodes using ancestor sets
+            function mrcaHeight(i, j) {
+                const id_i = tips_and_nodes[i].id;
+                const node_j = tips_and_nodes[j];
+                const ancestors_i = ancestorMap.get(id_i);
+                let current = node_j;
+                while (current) {
+                    if (ancestors_i.has(current.id)) {
+                        return current.height;
+                    }
+                    current = current.parent;
+                }
+                return 0; // fallback to root
+            }
+
+            // Build pairwise distance matrix using: dist(i,j) = h(i) + h(j) - 2 * h(MRCA(i,j))
+            const distMatrix = Array.from({ length: n }, () => Array(n).fill(0));
+            for (let i = 0; i < n; i++) {
+                for (let j = i + 1; j < n; j++) {
+                    const h1 = heights[i];
+                    const h2 = heights[j];
+                    const h_mrca = mrcaHeight(i, j);
+                    const dist = h1 + h2 - 2 * h_mrca;
+                    distMatrix[i][j] = dist;
+                    distMatrix[j][i] = dist; // symmetric
+                }
+            }
+
+            return distMatrix;
+        }
+        // Function to get distance between 2 nodes in a tree
+        function getDistanceBetweenNodes(tree, nodes, id1, id2) {
+          // Compute:
+          // distance(A, B) = height(A) + height(B) - 2 * height(mrca(A,B))
+
+          const nodes_id1 = nodes[id1];
+          const nodes_id2 = nodes[id2];
+          let mrca = tree.getMRCA([nodes_id1, nodes_id2]);
+
+          return nodes_id1.height + nodes_id2.height - 2 * mrca.height;
+        }
+        // Function gets date value from tip names
+        function extractDate(name, delimiter, location){
+            return name !== undefined ? parseFloat(name.split(delimiter)[location]) : NaN;
+        }
+        // Function to compute the bandwidth
+        function indexBandwidth(timescale, genomeLength, substitution_rate) {
+            if (timescale === 0) return null;
+
+            const lower = 1e-9;
+            const upper = 1 - 1e-9;
+
+            const h = genomeLength * (1 - Math.exp(-2 * substitution_rate * timescale));
+            
+            /*function objFun(b) {
+                const left = 0.5 * (1 - Math.pow(b, genomeLength));
+                const right = 1 - Math.pow(b, h);
+                return Math.pow(left - right, 2);
+            }
+
+            // Use numeric.js to minimise objFun over [lower, upper]
+            const steps = 1000;
+            let b_opt = lower;
+            let bestVal = objFun(lower);
+            const stepSize = (upper - lower) / steps;
+
+            for (let i = 1; i <= steps; i++) {
+                const b = lower + i * stepSize;
+                const val = objFun(b);
+                if (val < bestVal) {
+                    bestVal = val;
+                    b_opt = b;
+                }
+            }*/
+            function objFun(b) {
+                // Compute in log-space to avoid precision errors
+                const logB = Math.log(b);
+
+                const b_pow_L = Math.exp(logB * genomeLength);
+                const b_pow_h = Math.exp(logB * h);
+
+                const left = 0.5 * (1 - b_pow_L);
+                const right = 1 - b_pow_h;
+
+                return Math.pow(left - right, 2);
+              }
+
+              // Brent’s method-style 1D bounded search
+              const steps = 100000;  // High resolution
+              let b_opt = lower;
+              let bestVal = objFun(lower);
+
+              const stepSize = (upper - lower) / steps;
+
+              for (let i = 1; i <= steps; i++) {
+                const b = lower + i * stepSize;
+                const val = objFun(b);
+                if (val < bestVal) {
+                  bestVal = val;
+                  b_opt = b;
+                }
+              }     
+
+            return b_opt;
+        }
+        // Compute matrix_time_dist and matrix_evo_dist with branch-aware correction
+        function computeWindowFilteredMatrices(tips_and_nodes, collectionDates, matrix_evo_dist, window) {
+              const n = tips_and_nodes.length;
+              const corrected_time_dist = Array.from({ length: n }, () => Array(n).fill(0));
+              const corrected_evo_dist = Array.from({ length: n }, () => Array(n).fill(null));
+              const timeWindow = window;
+
+              // Precompute all branches
+              const branches = [];
+              for (let child of tips_and_nodes) {
+                if (child.parent !== undefined) {
+                  const parent = child.parent;
+                  const parentIdx = tips_and_nodes.indexOf(parent);
+                  const childIdx = tips_and_nodes.indexOf(child);
+                  const t1 = collectionDates[parentIdx];
+                  const t2 = collectionDates[childIdx];
+                  if (!isNaN(t1) && !isNaN(t2)) {
+                    branches.push({ parentIdx, childIdx, start: t1, end: t2 });
+                  }
+                }
+              }
+
+              for (let i = 0; i < n; i++) {
+                const sampleTime = collectionDates[i];
+                if (isNaN(sampleTime)) continue;
+
+                const tMin = sampleTime - timeWindow;
+                const tMax = sampleTime + timeWindow;
+
+                const relevantBranches = branches.filter(({ start, end }) => {
+                  return (
+                    (start <= tMin && end >= tMax) ||
+                    (start <= tMin && end >= tMin && end <= tMax) ||
+                    (start >= tMin && start <= tMax && end >= tMax) ||
+                    (start >= tMin && start <= tMax && end >= tMin && end <= tMax)
+                  );
+                });
+
+                const validIDs = new Set(relevantBranches.map(b => b.childIdx));
+
+                const nodeCount = {};
+                for (let b of relevantBranches) {
+                  nodeCount[b.parentIdx] = (nodeCount[b.parentIdx] || 0) + 1;
+                  nodeCount[b.childIdx] = (nodeCount[b.childIdx] || 0) + 1;
+                }
+                const connectingNodes = Object.entries(nodeCount)
+                  .filter(([_, count]) => count === 3)
+                  .map(([id]) => parseInt(id));
+
+                for (let j = 0; j < n; j++) {
+                  if (!validIDs.has(j) || connectingNodes.includes(j)) {
+                    corrected_time_dist[j][i] = 0;
+                    corrected_evo_dist[j][i] = null;
+                    continue;
+                  } else{
+                    corrected_time_dist[j][i] = 1;
+                    if (matrix_evo_dist[j][i] != null) {
+                      let corrected = matrix_evo_dist[j][i];
+
+                      // Time-based correction of evolutionary distance
+                      const branch = relevantBranches.find(b => b.childIdx === j);
+                      if (branch) {
+                        if (branch.end > sampleTime) {
+                          corrected -= Math.abs(branch.end - sampleTime);
+                        } else if (branch.end < sampleTime) {
+                          corrected += Math.abs(branch.end - sampleTime);
+                        }
+                      } 
+                    corrected_evo_dist[j][i] = corrected;
+                    }
+                  }
+
+                  if (j === i) {
+                    corrected_time_dist[j][i] = 1;
+                    corrected_evo_dist[j][i] = 0;
+                  }
+                }
+              }
+              return {
+                corrected_evo_dist,
+                corrected_time_dist
+              };
+        }     
+        // Function to highlight a point on the scatter plot 
+        function highlightPointOnPlot(nodeId, tips_and_nodes) {
+            //const plot = document.getElementById('scatter-container');
+            //const ids = window.tips_and_nodes_ids;
+
+            const idx = tips_and_nodes.indexOf(nodeId);
+            if (idx === -1) return;
+
+            // Extract point coordinates and label
+            const x = [window.data.x[idx]];
+            const y = [window.data.y[idx]];
+            const text = [tips_and_nodes[idx]];
+
+            // Update only the second trace (highlight trace)
+            Plotly.restyle(window.scatter_container, {
+              x: [x],
+              y: [y],
+              marker: {
+                        color: 'red',
+                        size: 12
+                      },
+              text: [text]
+             }, [2]);
+        }          
+        // Function to highligh point on tree
+        function highlightTipOnTree(nodeId, tips_and_nodes) {
+            if (!canvasTree) return;
+            if (!nodeId) return;
+
+            // Preserve existing styles
+            //const existingStyles = styles_tree;
+
+            // Create a shallow copy to avoid mutating global styles
+            //const updatedStyles = { ...existingStyles };
+            
+            // Apply highlight to the selected node (overwriting only that one)
+            //updatedStyles[nodeId] = {
+            //    ...updatedStyles[nodeId],  // keep original settings like shape or size
+            //    fillColour: "green",       // override only color
+            //    strokeColour: "black",     // optional outline
+            //    strokeWidth: 2             // optional outline width
+            //};
+            
+            canvasTree.setProps({
+                selectedIds: [nodeId]
+            });
+        }
+        // CSV parsing helper
+        function parseCSV(text, delimiter) {
+            const dsv = d3.dsvFormat(delimiter);
+            const rows = dsv.parseRows(text);
+            return rows;
+        }
+        function checkUnmatchedMetadataTips(metadataTable, tips_and_nodes_ids) {
+            const tipSet = new Set(tips_and_nodes_ids);
+
+            // Assume the first column contains the isolate/tip names
+            const unmatched = metadataTable.slice(1).filter(row => {
+            const label = row[0]?.trim();
+            return label && !tipSet.has(label);
+            });
+
+            if (unmatched.length > 0) {
+                const count = unmatched.length;
+                alert(
+                  count + " metadata entries do not match any tip in the tree.\n" +
+                  "Check that isolate names in your metadata exactly match tip labels."
+                );
+                console.warn("Unmatched metadata entries:", unmatched.map(row => row[0]));
+            }
+        }
+        // Color helper
+        function getCrossColors(n) {
+          const CrossPalette = ["#c969a1","#ce4441","#ee8577","#eb7926","#ffbb44","#859b6c","#62929a","#004f63","#122451"];
+          const m = CrossPalette.length;
+          if (n <= CrossPalette.length) {
+            // Sample n colors evenly spaced from the palette
+            const step = (m - 1) / (n - 1); // ensure last color is included
+            const indices = Array.from({ length: n }, (_, i) => Math.round(i * step));
+            const uniqueIndices = [...new Set(indices)]; // prevent duplicates for small n
+
+            return uniqueIndices.map(idx => CrossPalette[idx]);
+          } else {
+            // Interpolate: for simplicity, loop through or interpolate via chroma.js if available
+            const colors = [];
+            for (let i = 0; i < n; i++) {
+              const t = i / (n - 1); // fraction between 0 and 1
+              // interpolate two nearest base colors
+              const idxBase = t * (CrossPalette.length - 1);
+              const lo = Math.floor(idxBase);
+              const hi = Math.min(CrossPalette.length - 1, lo + 1);
+              const frac = idxBase - lo;
+              // simple linear interpolation of RGB
+              const c0 = hexToRgb(CrossPalette[lo]);
+              const c1 = hexToRgb(CrossPalette[hi]);
+              const cr = Math.round(c0.r + (c1.r - c0.r) * frac);
+              const cg = Math.round(c0.g + (c1.g - c0.g) * frac);
+              const cb = Math.round(c0.b + (c1.b - c0.b) * frac);
+              colors.push(rgbToHex(cr, cg, cb));
+            }
+            return colors;
+          }
+        }
+        function hexToRgb(hex) {
+            const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            if (!m) return { r:0, g:0, b:0 };
+                return {
+                r: parseInt(m[1], 16),
+                g: parseInt(m[2], 16),
+                b: parseInt(m[3], 16)
+            };
+        }
+        function rgbToHex(r, g, b) {
+            const toHex = (c) => c.toString(16).padStart(2, "0");
+            return "#" + toHex(r) + toHex(g) + toHex(b);
+        }
+        // Map labels to metadata and colors
+        function assignColoursFromGroupLabels(groupLabels) {
+            // Get unique groups
+            const uniqueGroups = Array.from(new Set(groupLabels));
+            if (!uniqueGroups.includes("Unknown")) {
+              uniqueGroups.push("Unknown");
+            }
+
+            // Use Plotly default palette or fallback
+            const palette = getCrossColors(uniqueGroups.length);
+
+            // Map group → color
+            const groupToColor = {};
+            uniqueGroups.forEach((group, idx) => {
+              if (group === "Unknown") {
+                groupToColor[group] = "#cccccc"; // force grey
+              } else {
+                groupToColor[group] = palette[idx];
+              }
+            });
+            window.groupToColor = groupToColor;
+            
+            // Map each entry to its corresponding color
+            return groupLabels.map(group => groupToColor[group] || "#cccccc"); // fallback: grey
+        }
+        // Function to compute the index dynamics and plot them
+        function preprocess_tree(text_input) {  
+          // Read tree
+          const schema = document.getElementById("formFormatTree").value;
+          //let tree;
+          try {
+              tree = phylojs.read(text_input, schema)[0];
+              tree.ladderise(); // Ladderize low to avoid matching problems
+              // Add names to internal nodes if missing
+              let unnamedCount = 0;
+              tree.nodeList.forEach((node, index) => {
+                if (!node.label) {
+                    node.label = `Node_${tree.nodeList.indexOf(node)}`;
+                }
+              });
+              const tips_and_nodes = tree.nodeList;
+              const n = tips_and_nodes.length;
+              const tips_and_nodes_ids = tips_and_nodes.map(n => n.label);
+              window.tips_and_nodes = tips_and_nodes; // save globally
+              window.n = n; // save globally
+              window.tips_and_nodes_ids = tips_and_nodes_ids; // save globally
+          } catch (error) {
+              console.warn(error);
+              alert("Cannot read tree. Please check format.");
+              return;
+          }
+        }
+        function preprocess_metadata() {
+          // Read metadata, if any
+          let groupLabels = [];
+          let collectionDates = [];
+          let tips_and_nodes_ids = window.tips_and_nodes_ids;
+          try {
+            const metadataSource = document.querySelector('input[name="metadataSource"]:checked')?.value;
+            window.metadataSource = metadataSource;
+            if (metadataSource === "tip") {
+                // Option 1: Parse from tip labels
+                const delimiter = document.getElementById("tipDelimiter").value;
+                const groupLoc = parseInt(document.getElementById("groupLocation").value)-1; // Because we count from 1, but javascripts counts from 0 
+                const dateLoc = parseInt(document.getElementById("dateLocation").value)-1; // Because we count from 1, but javascripts counts from 0 
+                const dateFormat = document.getElementById("dateFormat").value;
+                groupLabels = tips_and_nodes_ids.map(name => {
+                    const parts = name.split(delimiter);
+                    const index = groupLoc < 0 ? parts.length + groupLoc : groupLoc;
+                    return parts[index] ?? "Unknown";
+                });
+                collectionDates = tips_and_nodes_ids.map(name => {
+                    const parts = name.split(delimiter);
+                    const index = dateLoc < 0 ? parts.length + dateLoc : dateLoc;
+                    const raw = parts[index] ?? "";
+
+                    if (dateFormat === "Decimal") {
+                        return parseFloat(raw);
+                    } else {
+                        let dateVal = NaN;
+                        let date;
+                        if (dateFormat === "DD-MM-YYYY") {
+                        const parts = dateString.split("-");
+                          if (parts.length === 3) {
+                             const [day, month, year] = parts.map(p => parseInt(p, 10));
+                             date = new Date(Date.UTC(year, month - 1, day));
+                          }
+                        } else if (dateFormat === "YYYY-MM-DD") {
+                          // Safe parse with built-in parser
+                          date = new Date(dateString);  // Assumes YYYY-MM-DD or ISO
+                        }
+                        if (date instanceof Date && !isNaN(date)) {
+                          const year = date.getUTCFullYear();
+                          const startOfYear = new Date(Date.UTC(year, 0, 1));
+                          const endOfYear = new Date(Date.UTC(year + 1, 0, 1));
+                          const fraction = (date - startOfYear) / (endOfYear - startOfYear);
+                          dateVal = year + fraction;
+                        }
+                        return dateVal;
+                    }
+                });
+                if (collectionDates.every(val => isNaN(val))) {
+                    alert("All collection dates are NaN. Please check your metadata.");
+                }
+            } else if (metadataSource === "csv" && window.metadataTable) {
+                // Option 2: From CSV (assumes: tip, date, group)
+                const csvData = window.metadataTable;
+                const rows = csvData.slice(1); // skip header
+                
+                const delimiter = document.getElementById("CSVDelimiter").value;
+                const groupLoc = parseInt(document.getElementById("groupcolumn").value)-1; // Because we count from 1, but javascripts counts from 0 
+                const dateLoc = parseInt(document.getElementById("datecolumn").value)-1; // Because we count from 1, but javascripts counts from 0 
+                const dateFormat = document.getElementById("dateFormatCSV").value;
+                
+                const metadataMap = new Map(
+                    rows.map(row => {
+                        const tip = row[0];
+                        const dateRaw = row[dateLoc] ?? "";
+                        const group = row[groupLoc] ?? "Unknown";
+                        let dateVal;
+                        if (dateFormat === "Decimal") {
+                            dateVal = parseFloat(dateRaw);
+                        } else {
+                            let dateVal = NaN;
+                            let date;
+                            if (dateFormat === "DD-MM-YYYY") {
+                            const parts = dateString.split("-");
+                              if (parts.length === 3) {
+                                 const [day, month, year] = parts.map(p => parseInt(p, 10));
+                                 date = new Date(Date.UTC(year, month - 1, day));
+                              }
+                            } else if (dateFormat === "YYYY-MM-DD") {
+                              // Safe parse with built-in parser
+                              date = new Date(dateString);  // Assumes YYYY-MM-DD or ISO
+                            }
+                            if (date instanceof Date && !isNaN(date)) {
+                              const year = date.getUTCFullYear();
+                              const startOfYear = new Date(Date.UTC(year, 0, 1));
+                              const endOfYear = new Date(Date.UTC(year + 1, 0, 1));
+                              const fraction = (date - startOfYear) / (endOfYear - startOfYear);
+                              dateVal = year + fraction;
+                            }
+                        }
+                        return [tip, { group, date: dateVal }];
+                    })
+                )
+                function safeGet(metadataMap, id, field, fallback) {
+                  const entry = metadataMap.get(id);
+                  return (entry && entry[field] !== undefined) ? entry[field] : fallback;
+                }
+                groupLabels = tips_and_nodes_ids.map(id => safeGet(metadataMap, id, 'group', 'Unknown'));
+                collectionDates = tips_and_nodes_ids.map(id => safeGet(metadataMap, id, 'date', NaN));
+                
+                checkUnmatchedMetadataTips(window.metadataTable, window.tips_and_nodes_ids);
+            }
+          } catch (error) {
+             console.warn("Metadata parsing failed:", error);
+             tips_and_nodes_ids = tree.getTipLabels();
+             groupLabels = tips_and_nodes_ids.map(() => "Unknown");
+             collectionDates = tips_and_nodes_ids.map(() => NaN);
+          }
+          if ((metadataSource === "csv" | metadataSource === "tip") & collectionDates.every(val => isNaN(val))) {
+              alert("All collection dates are NaN. Please check metadata fields.");
+              throw new Error("All collection dates are NaN. Please check metadata fields.");
+          }
+      
+          // Save globally if needed
+          window.groupLabels = groupLabels;
+          window.collectionDates = collectionDates;
+        }
+        function runAnalysis(treeText) { 
+              const startTime = performance.now();
+              
+              // Compute the index dynamics
+              
+              // Handle tree
+              tree.computeNodeHeights();
+
+              let ladderisednewickText = phylojs.writeNewick(tree);
+
+              // Distance between nodes in tree (to be optimised)
+              let matrix_evo_dist = computeDistancesFromTree(tree);
+              
+              // Scale the tree with provided dates
+              if (metadataSource === "csv" | metadataSource === "tip"){
+                  const firstValidDate = collectionDates.findIndex(d => !isNaN(d));
+                  const offset = collectionDates[firstValidDate] - tips_and_nodes[firstValidDate].height;
+                  for (let i = 0; i < tips_and_nodes.length; i++) {
+                      const node = tips_and_nodes[i];
+                      // Set new height 
+                      node.height = node.height + offset;
+                  }
+              }
+              
+              // Compute heights of nodes, and a matrix of time difference, subset for the given window
+              const heights = Array(n).fill(0);
+              for (let i = 0; i < n; i++) {
+                const nodes_id1 = tips_and_nodes[i];
+                heights[i] = nodes_id1.height;
+              }
+              
+              const time_window = parseFloat($('#window').val());
+              let matrix_time_dist = Array.from({ length: n }, () => Array(n).fill(1));
+              const { corrected_evo_dist, corrected_time_dist} = computeWindowFilteredMatrices(
+                tips_and_nodes,
+                heights,
+                matrix_evo_dist,
+                time_window
+              );
+              matrix_evo_dist = corrected_evo_dist;
+              matrix_time_dist = corrected_time_dist;
+              
+              // Compute actual index
+              const timescale = parseFloat($('#Timescale').val());
+              const genomeLength = parseFloat($('#genomelength').val());
+              const substitution_rate = parseFloat($('#substitution_rate').val());
+              const bandwidth = indexBandwidth(timescale, genomeLength, substitution_rate);
+              const B = matrix_evo_dist.map(row =>
+                  row.map(val => val === null ? 0 : Math.pow(bandwidth, val))
+              );
+              
+              const Bsums = Array(n).fill(0);
+              const Wsums = Array(n).fill(0);
+              for (let i = 0; i < n; i++) {
+                  let sum1 = 0;
+                  let sum2 = 0;
+                  for (let j = 0; j < n; j++) {
+                      if (matrix_evo_dist[j][i] !== null) sum1 += B[j][i]; // Evo dist, weighted by bandwidth
+                      sum2 += matrix_time_dist[j][i]; // Number of nodes in the same window of time as j
+                  }
+                  Bsums[i] = sum1 - 1;
+                  Wsums[i] = sum2 - 1;
+              }
+              
+              const result = Bsums.map((val, idx) => {
+                  if (Wsums[idx] === 0) return NaN;
+                  return val / Wsums[idx];
+              });
+              
+              // Helper to slice arrays based on indices
+              // const subset = (arr, indices) => indices.map(i => arr[i]);
+              const elapsed = (performance.now() - startTime) / 1000;
+              analysisstatusMessage.textContent = `Done, processed the ${tree.getTipLabels().length}-tip tree in ${elapsed.toFixed(1)} seconds.`;
+              //if (metadataSource === "csv" | metadataSource === "tip"){
+            //    const nanCount = subset(collectionDates, tipIndices).filter(d => isNaN(d)).length;
+              //  if(nanCount > 0){
+            //        analysiswarningMessage.textContent = 'Warning, some tips have NaN dates.'
+              //      console.log(nanCount);
+            //    }
+            //  }else{
+            //      analysiswarningMessage.textContent = 'No collection times were supplied, the root is by default at year 0.'
+             // }
+                
+              window.result = result;
+              window.heights = heights;
+              window.ladderisednewickText = ladderisednewickText;
+        }        
+        function plotresult(){
+              let result = window.result;
+              let heights = window.heights;
+              setTimeout(() => {
+                  // Create data variables to plot
+              const tree_container = document.querySelector("#tree-container");
+              window.tree_container = tree_container;  // save globally
+              tree_container.innerHTML = ""; // Clear previous tree
+              
+              const scatter_container = document.getElementById('scatter-container');
+              window.scatter_container = scatter_container;  // save globally
+              scatter_container.innerHTML = ""; // Clear previous tree
+              
+              // Colours
+              let colours = tips_and_nodes_ids.map(_ => "royalblue");                     
+              if (metadataSource === "tip" || metadataSource === "csv") {
+                colours = assignColoursFromGroupLabels(window.groupLabels);
+              }
+              // For the tree
+              const styles_tree = {};
+              tips_and_nodes_ids.forEach((id, index) => {
+                  styles_tree[id] = { fillColour: colours[index] };
+              });
+              window.styles_tree = styles_tree;
+              // For the scatter plot
+              const tipIndices = [];
+              const nodeIndices = [];
+              tips_and_nodes.forEach((node, index) => {
+                if (node.children && node.children.length > 0) {
+                  nodeIndices.push(index);  // internal node
+                } else {
+                  tipIndices.push(index);   // tip
+                }
+              });
+              // Helper to slice arrays based on indices
+              const subset = (arr, indices) => indices.map(i => arr[i]);
+              // Create separate layers
+              var data = { 
+                x: heights,
+                y: result,
+                text: tips_and_nodes_ids.map(String),
+                mode: 'markers',
+                type: 'scatter',
+                name: 'Tips',
+                hovertemplate: "%{text}<extra></extra>"
+              };
+              var data_tip = { 
+                x: subset(heights, tipIndices),
+                y: subset(result, tipIndices),
+                text: subset(tips_and_nodes_ids, tipIndices).map(String),
+                mode: 'markers',
+                type: 'scatter',
+                name: 'Tips',
+                hovertemplate: "%{text}<extra></extra>",
+                marker: { color: subset(colours, tipIndices), size: 8 }
+              };
+              var data_nodes = { 
+                x: subset(heights, nodeIndices),
+                y: subset(result, nodeIndices),
+                text: subset(tips_and_nodes_ids, nodeIndices).map(String),
+                mode: 'markers',
+                type: 'scatter',
+                name: 'Internal nodes',
+                hovertemplate: "%{text}<extra></extra>",
+                marker: { color: "grey", size: 6, symbol: 'cross' }
+              };
+              window.data = data; 
+              window.data_tip = data_tip; 
+              window.data_nodes = data_nodes; 
+              // Save orginal marker layout
+              window.originalPlotStyle = {
+                  nodes: {
+                    marker: {
+                      color: "grey",
+                      size: 6,
+                    }
+                  },
+                  tips: {
+                    marker: {
+                      color: subset(colours, tipIndices),
+                      size: 6,
+                    }
+                  },
+              };
+              
+              // Plot tree
+              canvasTree = new phylocanvas.PhylocanvasGL(tree_container, 
+                      {
+                        source: ladderisednewickText,
+                        nodeSize:5,
+                        type: phylocanvas.TreeTypes.Rectangular,
+                        showLabels: true,
+                        fontSize: 10, 
+                        showLeafLabels: true,
+                        showInternalLabels:false,
+                        interactive: true,
+                        alignLabels: true,
+                        haloRadius: 15,
+                        highlightColour: 'red',
+                        highlightNode: 1,
+                        nodeShape: phylocanvas.Shapes.Circle
+                    }
+              );
+              canvasTree.setProps({
+                  styles: styles_tree
+              });
+              // Plot legend 
+              if (metadataSource === "csv" | metadataSource === "tip"){
+                 renderColorLegend(window.groupToColor);
+              } else{
+                 renderFixedLegend();
+              }
+              
+              // Plot scatter plot
+              Plotly.newPlot(scatter_container, {
+                    data: [
+                          {
+                            x: data_nodes.x,                      // full data
+                            y: data_nodes.y,
+                            text: data_nodes.text,
+                            mode: data_nodes.mode,
+                            type: data_nodes.type,
+                            name: data_nodes.name,
+                            marker: {
+                              color: data_nodes.marker.color,
+                              size: 6
+                            },
+                            hoverinfo: 'text',
+                            showlegend: false
+                          },
+                          {
+                            x: data_tip.x,                      // full data
+                            y: data_tip.y,
+                            text: data_tip.text,
+                            mode: data_tip.mode,
+                            type: data_tip.type,
+                            name: data_tip.name,
+                            marker: {
+                              color: data_tip.marker.color,
+                              size: 6
+                            },
+                            hoverinfo: 'text',
+                            showlegend: false
+                          },
+                          {
+                            x: [],                          // placeholder for highlighted point
+                            y: [],
+                            text: [],
+                            mode: 'markers',
+                            type: 'scatter',
+                            name: 'Highlighted point',
+                            marker: {
+                              color: 'red',
+                              size: 12
+                            },
+                            hoverinfo: 'text',
+                            showlegend: false
+                          }
+                        ],
+                  layout: {
+                      width: 1000,
+                      height: 500,      
+                      xaxis: {
+                          title: {
+                              text: 'Time',
+                              font: {
+                                  family: 'Helvetica, Arial, sans-serif',
+                                  size: 18,
+                                  color: '#7f7f7f'
+                              }
+                          }
+                      },
+                      yaxis: {
+                          title: {
+                              text: 'Index',
+                              font: {
+                                  family: 'Helvetica, Arial, sans-serif',
+                                  size: 18,
+                                  color: '#7f7f7f'
+                              }
+                          }
+                      },
+                      title: {
+                          text: 'Index dynamics',
+                          font: {
+                              family: 'Helvetica, Arial, sans-serif',
+                              size: 20,
+                              color: '#7f7f7f'
+                          }
+                      },
+                      hoverlabel: {
+                           bgcolor: "white",     
+                           font: {
+                              color: "black",     
+                              family: "Arial"
+                           },
+                           bordercolor: "#ccc"   
+                      },
+                  }
+              });
+   
+              // Handle the highlight Tree -> Scatter plot
+              setTimeout(() => {
+                    if (!canvasTree.deck) {
+                        console.error("DeckGL not ready");
+                        return;
+                    }
+                    canvasTree.deck.props.onClick = (info, event) => {
+                        const node = canvasTree.pickNodeFromLayer(info);
+                        if (node && node.id) {
+                            highlightPointOnPlot(node.id, tips_and_nodes_ids);
+                        } else {
+                            // Reset plot
+                            const ids = window.tips_and_nodes_ids;
+                            const style = window.originalPlotStyle;
+
+                            if (!scatter_container || !ids || !style) return;
+                            
+                            Plotly.restyle(scatter_container, {
+                                'marker.color': [style.marker.color],
+                                'marker.size': [style.marker.size]
+                            });
+                        }
+                    };
+              }, 200); // Delay ensures canvasTree.deck is initialized
+
+              // Handle the highlight Scatter plot --> tree
+              let hoverLock = false;
+              scatter_container.on('plotly_hover', (eventData) => {
+                  if (hoverLock) return;
+                  
+                  const point = eventData.points[0];
+                  const nodeId = point.text;
+
+                  hoverLock = true;
+                  highlightTipOnTree(nodeId, tips_and_nodes_ids);
+                  highlightPointOnPlot(nodeId, tips_and_nodes_ids); // Add this to highlight the point hovered
+                  hoverLock = false;
+              });
+
+              // Reset layout button
+              /*document.getElementById("resetLayoutBtn").addEventListener("click", () => { 
+                  //const plot = document.getElementById('scatter-container');
+                  const ids = window.tips_and_nodes_ids;
+                  const style = window.originalPlotStyle;
+                  if (!scatter_container || !ids || !style) return;
+
+                  Plotly.restyle(scatter_container, {
+                    'marker.color': [style.nodes.marker.color],
+                    'marker.size': [style.nodes.marker.size]
+                  },[0]);
+                  Plotly.restyle(scatter_container, {
+                    'marker.color': [style.tips.marker.color],
+                    'marker.size': [style.tips.marker.size]
+                  },[1]);
+                  Plotly.restyle(scatter_container, {
+                    x: [],
+                    y: [],
+                    //'marker.color': "white"
+                  },[2]);
+              });*/
+              
+              // Download data
+              document.getElementById("download-data-btn").addEventListener("click", function () {
+                // Build CSV content
+                let csv = "Label,Height,Index\n";
+                for (let i = 0; i < data.x.length; i++) {
+                  const node_label = data.text[i];
+                  const time = data.x[i];
+                  const index = data.y[i];
+                  const group = window.groupLabels[i];
+                  csv += `"${node_label}",${time},${index},${group}\n`;
+                }
+
+                // Create a blob and trigger download
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", "phylowave_dynamics.csv");
+                link.style.display = "none";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              });
+            }, 0);
+        }
+    </script>
+  <script>
+        // Place holder for tree
+        let treeText = null;
+        // Place holder for status message
+        const analysisstatusMessage = document.getElementById("analysis-status-message");
+        const analysiswarningMessage = document.getElementById("analysis-warning-message");
+
+        // Set up drag and drop for the tree
+        const dropArea = document.getElementById("tree-drop-area");
+        const treestatusMessage = document.getElementById("tree-status-message");
+        ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+            dropArea.addEventListener(eventName, (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }, false);
+        });
+        dropArea.addEventListener("drop", (e) => {
+          const files = e.dataTransfer.files;
+
+          if (files.length > 0) {
+              const file = files[0];
+              const reader = new FileReader();
+
+              reader.onload = function(event) {
+                  treeText = event.target.result;
+                  dropArea.innerHTML = ""; // Clear drop message
+                  dropArea.textContent = "Tree loaded.";
+                  dropArea.style.color = "green";
+            
+                  try {
+                    const schema = document.getElementById("formFormatTree").value;
+                    let tree = phylojs.read(treeText, schema)[0];
+                    const example_tips = tree.getTipLabels()[1];
+                    window.tree = tree; // save globally
+                    window.example_tips = example_tips; // save globally
+                  } catch (error) {
+                    console.warn(error);
+                    alert("Cannot read tree. Please check format.");
+                  }
+              };
+              reader.readAsText(file);
+          }
+        });
+        
+        // 'Activate' metadata field
+        document.getElementById("addMetadataBtn").addEventListener("click", () => {
+            const addmetadataBtnDiv = document.getElementById("addmetadata");
+            const parserDiv = document.getElementById("metadata-parser");
+            const tip_name_example = document.getElementById("tip_name_example");
+            if (window.tree === undefined) {
+                alert("No tree loaded. Please load a tree first.");
+            }else {
+                try {
+                    tip_name_example.innerHTML = ""; // Clear drop message
+                    tip_name_example.textContent = `Example of tip name: "${window.example_tips}"` ;  
+                    parserDiv.style.display = "block";
+                    addmetadataBtnDiv.style.display = "none";
+                } catch (error) {
+                    console.warn(error);
+                    alert("No tree loaded. Please load a tree first.");
+                }
+            }
+        }); 
+
+        // Toggle between metadata input methods
+        const tipOption = document.getElementById("metadata-option-tip");
+        const csvOption = document.getElementById("metadata-option-csv");
+        document.querySelectorAll('input[name="metadataSource"]').forEach((radio) => {
+            radio.addEventListener("change", (e) => {
+                if (e.target.value === "tip") {
+                    tipOption.style.display = "block";
+                    csvOption.style.display = "none";
+                } else {
+                    tipOption.style.display = "none";
+                    csvOption.style.display = "block";
+
+                }
+            });
+        }); 
+            
+        // Set up metadata field
+        const csvDropArea = document.getElementById("csv-drop-area");
+        const csvstatusMessage = document.getElementById("csv-status-message");
+        ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+            csvDropArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+        });
+        csvDropArea.addEventListener("drop", (e) => {
+            const files = e.dataTransfer.files;
+
+            if (files.length > 0) {
+            const file = files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const csvText = event.target.result;
+
+                // Get selected format
+                const format = document.getElementById("CSVDelimiter").value;
+
+                // Determine delimiter
+                let delimiter = ",";
+                switch (format) {
+                    case "Semicolon": delimiter = ";"; break;
+                    case "Tab": delimiter = "\t"; break;
+                    case "Pipe": delimiter = "|"; break;
+                }
+
+                // Parse the CSV using the selected delimiter
+                const parsedData = parseCSV(csvText, delimiter);
+
+                if (parsedData.length === 0 || parsedData[0].length <= 1) {
+                    alert("CSV file appears to be improperly formatted. Please check the delimiter.");
+                    return;
+                }else{
+                    csvDropArea.innerHTML = ""; // Clear drop message
+                    csvDropArea.textContent = "CSV loaded.";
+                    csvDropArea.style.color = "green";
+                }
+
+                // Save globally if needed
+                window.metadataTable = parsedData;
+            };
+
+            reader.readAsText(file);
+            }
+        });
+      
+        let result;
+        let heights;
+        // Connect Run button
+        document.getElementById("runBtn").addEventListener("click", () => {
+            if (!treeText) {
+                alert("Please drop a tree file first!");
+                return;
+            }
+
+            setTimeout(() => {
+                preprocess_tree(treeText);
+                preprocess_metadata();
+            }, 0);
+            
+            analysisstatusMessage.innerHTML = `<span class="spinner"></span> Processing...`;
+            analysisstatusMessage.style.color = "green";
+      
+            setTimeout(() => {
+                runAnalysis(treeText);
+                plotresult();
+            }, 0);
+        });
+      
+        // Connect parse metadata button
+        document.getElementById("parseMetadataBtn").addEventListener("click", () => {
+            let result = window.result;
+            if (result) {
+                setTimeout(() => {
+                    preprocess_metadata();
+                    plotresult();
+                }, 0);
+            }
+        });
+    </script>
+    
+</body>
+    
+</html>
+
+
+
+
+

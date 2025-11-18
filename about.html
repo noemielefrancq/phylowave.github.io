@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Phylowave</title>
+
+    <link rel="icon" href="logo/favicon/favicon-96x96.png" type="image/png">
+    <link rel="icon" type="image/png" href="logo/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="logo/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="logo/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="logo/favicon/apple-touch-icon.png" />
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    
+    <link rel="stylesheet" href="css/style.css" /> <!-- my own styles -->
+
+    <style>
+ 
+    </style>
+</head>
+    
+<body>
+  <div class="main-container d-flex">
+      
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar" id="side_nav">
+      <!-- Title -->  
+      <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-center align-items-center">
+          <div 
+               class="d-flex justify-content-center align-items-center bg-white shadow rounded"
+               style="height: 60px; width: 180px; position: relative;">
+            <img
+              src="logo/Logo_small.png"
+              alt="Logo"
+            style="height: 100%; width: 100%; object-fit: contain; position: relative" />
+          </div>
+        <button class="btn d-md-none d-block close-btn px-1 py-0 text-white"><i class="fal fa-stream"></i></button>
+      </div>
+      <!-- List of options --> 
+      <ul class="list-unstyled px-2">
+        <li class="inactive"> 
+            <a href="index.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-home"></i> Home </a> 
+        </li>
+        <hr class="h-color mx-2">
+        <li class="inactive"> 
+            <a href="examples.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-lightbulb"></i> Examples </a> 
+        </li>
+        <li class="inactive"> 
+            <a href="analysis.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-chart-bar"></i> Run your analysis </a> 
+        </li>
+        <li class="active"> 
+            <a href="about.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-info-circle"></i> About </a> 
+        </li>
+      </ul>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="content">
+      <div class="dashboard-content px-3">
+          <div id="get-started-panel" class="content-panel" style="display: block; margin-top: 25px;">
+            <h2>Get started</h2>
+            <br>
+            <h5>Overview</h5>
+            This is a web-based implementation of <a href="https://doi.org/10.1038/s41586-024-08309-9">Phylowave</a>. It enables you to load a time-resolved phylogeny, compute the phylowave index, and explore the dynamics on a browser. 
+            <br> Importantly, <b> your data will stay on your computer</b>, the analysis runs locally, in your browser.
+            <br>Running time: for small trees, output is computed withing seconds. For larger tree (up to 5,000 tips), a few minutes might be required.
+            <br>
+            <br>
+            
+            <h5>Citation</h5>
+            If you use Phylowave as part of research that leads to a publication, please cite the following article: <br>
+            <em>N. Lefrancq <i>et al.</i></em>, <q>Learning the fitness dynamics of pathogens from phylogenies</q>,<em> Nature</em>, <b>637</b>, 683–690 (2025).  <a href="https://www.nature.com/articles/s41586-024-08309-9" target="_blank">(https://doi.org/10.1038/s41586-024-08309-9)</a>
+            
+            <br>
+            <br>
+              
+            <h5>Examples</h5>
+            Example datasets are available in the <span style="cursor:pointer; color:#3366cc;" onclick="location.href='examples.html'">examples</span> tab.
+            <br>
+            <br>
+              
+            <h5>Step-by-step guide</h5>
+            Follow this step by step guide to <span style="cursor:pointer; color:#3366cc;" onclick="location.href='analysis.html'">run your analysis</span>.
+            <ol>
+              <li>Data input</li>
+                <ul>
+                  <li>Tree (mandatory): 
+                      <br> Load your time-resolved phylogeny, using the drop area. Make sure you select the correct tree format before dropping your tree. The code assumes a time-resolved phylogeny, if you input a mutation-calibrated phylogeny, the results will make little to no sense. 
+                  </li>
+                  <li>Metadata (optional): 
+                      <br> Has to be loaded <i>after the tree</i>. It will be used to (i) scale the tree in calendar time and (2) colour the results by the sequence metadata you input. This is optional, by default the tree will be scaled compared to the root (time 0), and one color will be used. 
+                      <br> You have two options: either parse metadata from your tip labels, or drop a metadata table and parse it according to its format.
+                      <br> You can upload your metadata after running the analysis, and change the colouring scheme if needed.
+                  </li>
+                </ul>     
+              <li>Parameter input</li>
+                <ul>
+                  <li> Pathogen specific:</li>
+                      <ul> 
+                      <li> <code>Genome length</code>: </li>
+                        Genome length of the pathogen, in number of base pairs. It does not need to be exact. For example for SARS-CoV-2: 30000.
+                      <li> <code>Substitution rate</code>: </li>
+                        Mean substitution rate of the pathogen, in substitutions per base pair per year. It does not need to be exact. For example for SARS-CoV-2: 8.1E-4.
+                      </ul>  
+                  <li> Index specific:</li>
+                      <ul> 
+                      <li><code>Timescale</code>:</li>
+                        Scaling factor for the index computation, in years. This is the most important parameter. As a rule of thumb, set it to an estimated minimum time it could take for a lineage of your pathogen to replace the population. For example for SARS-CoV-2: 0.15 years (which is 1.8 months). You can modify it and rerun the analysis if needs be. 
+                      <li><code>Window</code>: </li>
+                        window of time, in years, around each node for which other nodes are considered to circulate 'at the same time'. If \(t_i\) is the time of node \( i \), all nodes that fall in the time interval \([t_i – window; t_i + window]\) are considered to be circulating at the same time as \( i \). For example for SARS-CoV-2: 0.25 years (which is 3 months). You can modify it and rerun the analysis if needs be. 
+                      </ul>  
+                </ul>     
+              <li>Run your analysis. </li>
+                 Simply press the "Run analysis" button. Depending on the size of your tree, the index computation can take up to a few minutes (but usually seconds).
+              <li>Explore dynamics</li>
+                <ul>
+                  <li>Tree and index dynamics</li>
+                    The results will be plotteed in the two panels "Tree" and "Index dynamics". Those are interactive, you can zoom in/out, select a tip to highlight.
+                  <li>Update parameters</li>
+                    You can explore the influence of parameters, especially <code>Timescale</code> and <code>Window</code>, on the computation of the index dynamics.
+                  <li>Colour the tree by some metadata</li>
+                    If you haven't loaded any data, all the terminal nodes will be plotted in blue. If you want to colour them by some other tip trait, you can load some metadata. You can also change the tip trait you want to colour the plots by, without reruning the whole analysis. 
+                </ul>
+               <li>Download results</li>
+                 You have the option to download the index dynamics as csv by clicking on the button "Download phylowave dynamics as csv".
+            </ol>
+
+            <br>
+              
+            <h5>Going beyond</h5>
+              This website aims to make exploratory analysis using Phylowave more accessible, by computing in real time the Phylowave index dynamics on a tree. If you're interested in learning more about Phylowave and possible analyses, read the <a href="https://doi.org/10.1038/s41586-024-08309-9">Phylowave paper</a>. <br>
+              Lineage detection is currently <i>not supported</i> by this website. To perform lineage detection based on the index dynamics, please go to the <a href="https://github.com/noemielefrancq/Phylowave_Learning-fitness-dynamics-pathogens-in-phylogenies">R implementation of Phylowave</a>.          
+            
+            <br>
+            <br>
+              
+            <h5>Bugs and improvements</h5>
+              If you found a bug or would like to suggest a improvement, please open an issue on the <a href="https://github.com/noemielefrancq/Phylowave_Learning-fitness-dynamics-pathogens-in-phylogenies">Website GitHub repository</a>.
+            
+            <br>
+            <br>
+            <br>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="custom-footer">
+      <p>More on Phylowave:</p>
+      <div>
+        <div>
+          <div>GitHub</div>
+          <a href="https://github.com/noemielefrancq/Phylowave_Learning-fitness-dynamics-pathogens-in-phylogenies" target="_blank" aria-label="GitHub">
+            <i class="fab fa-github fa-lg"></i>
+          </a>
+        </div>
+
+        <div>
+          <div>Paper</div>
+          <a href="https://www.nature.com/articles/s41586-024-08309-9" target="_blank" aria-label="Paper">
+            <i class="fas fa-file fa-lg"></i>
+          </a>
+        </div>
+
+        <div>
+          <div>Mail</div>
+          <a href="mailto:noemie.lefrancq@bsse.ethz.ch" target="_blank" aria-label="Email">
+            <i class="fas fa-envelope fa-lg"></i>
+          </a>
+        </div>
+      </div>
+  </footer>
+
+  <!-- External JS -->
+  <script src="https://unpkg.com/@phylocanvas/phylocanvas.gl@latest/dist/bundle.min.js"></script>
+  <script src="https://unpkg.com/phylojs@latest/lib/dist/phylojs.min.js"></script>
+  <script src='https://cdn.jsdelivr.net/gh/kdpsingh/rjs@master/r.js'></script>   
+  <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script> <!-- To compute the bandwidth -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- Select2 CSS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>   <!-- Select2 JS -->
+    
+  <script src="https://unpkg.com/@phylocanvas/phylocanvas.gl@latest/dist/bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Drop down for the format options -->
+  <script>
+    $(document).ready(function() {
+      $('#formFormat').select2({
+        placeholder: 'Select a format',
+        allowClear: true,
+      });
+
+      // Reveal the select after Select2 initializes
+      $('#formFormat').css('visibility', 'visible');
+
+      // Optional: log selected value
+      $('#formFormat').on('change', function() {
+        console.log('Selected format:', $(this).val());
+      });
+    });
+        
+  </script>    
+  <!-- Sidebar Toggle JS -->
+  <script>
+    $(".sidebar ul li").on('click', function () {
+      $(".sidebar ul li.active").removeClass('active');
+      $(this).addClass('active');
+    });
+    $('.open-btn').on('click', function () {
+      $('#side_nav').addClass('active');
+    });
+    $('.close-btn').on('click', function () {
+      $('#side_nav').removeClass('active');
+    });
+  </script>
+
+</body>
+    
+</html>
+
+
+
+
+
