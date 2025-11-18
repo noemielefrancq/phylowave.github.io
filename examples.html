@@ -41,14 +41,14 @@
             <a href="index.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-home"></i> Home </a> 
         </li>
         <hr class="h-color mx-2">
+        <li class="inactive"> 
+            <a href="get_started.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-cogs"></i> Get started </a> 
+        </li>
         <li class="active"> 
             <a href="examples.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-lightbulb"></i> Examples </a> 
         </li>
         <li class="inactive"> 
             <a href="analysis.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-chart-bar"></i> Run your analysis </a> 
-        </li>
-        <li class="inactive"> 
-            <a href="about.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-info-circle"></i> About </a> 
         </li>
       </ul>
     </div>
@@ -59,7 +59,7 @@
           <div id="analysis-panel" class="content-panel" style="display: block; margin-top: 25px;">
                 <h2>Explore examples of Phylowave dynamics.</h2>
                 <div class="feature-grid">
-                  <div class="feature-box" onclick="location.href='example_analysis/examples_sc2.html'">
+                  <div class="feature-box" onclick="location.href='example_analysis/example_template.html'">
                     <div class="feature-icon"><i class="fal fa-angle-right"></i></div>
                     <div>
                       <h3>SARS-CoV-2</h3>
@@ -67,7 +67,7 @@
                     </div>
                   </div>
 
-                  <div class="feature-box" onclick="location.href='example_analysis/examples_h3n2.html'">
+                  <div class="feature-box" onclick="location.href='example_analysis/example_H3N2.html'">
                     <div class="feature-icon"><i class="fal fa-angle-right"></i></div>
                     <div>
                       <h3>H3N2</h3>
@@ -75,7 +75,7 @@
                     </div>
                   </div>
 
-                  <div class="feature-box" onclick="location.href='example_analysis/examples_bp.html'">
+                  <div class="feature-box" onclick="location.href='example_analysis/example_BP.html'">
                     <div class="feature-icon"><i class="fal fa-angle-right"></i></div>
                     <div>
                       <h3>B. pertussis</h3>
@@ -83,7 +83,7 @@
                     </div>
                   </div>
 
-                   <div class="feature-box" onclick="location.href='example_analysis/examples_tb.html'">
+                   <div class="feature-box" onclick="location.href='example_analysis/example_TB.html'">
                     <div class="feature-icon"><i class="fal fa-angle-right"></i></div>
                     <div>
                       <h3>M. tuberculosis</h3>
@@ -95,6 +95,34 @@
       </div>
     </div>  
   </div>
+    
+   
+  <!-- FOOTER -->
+  <footer class="custom-footer">
+      <p>More on Phylowave:</p>
+      <div>
+        <div>
+          <div>GitHub</div>
+          <a href="https://github.com/noemielefrancq/Phylowave_Learning-fitness-dynamics-pathogens-in-phylogenies" target="_blank" aria-label="GitHub">
+            <i class="fab fa-github fa-lg"></i>
+          </a>
+        </div>
+
+        <div>
+          <div>Paper</div>
+          <a href="https://www.nature.com/articles/s41586-024-08309-9" target="_blank" aria-label="Paper">
+            <i class="fas fa-file fa-lg"></i>
+          </a>
+        </div>
+
+        <div>
+          <div>Mail</div>
+          <a href="mailto:noemie.lefrancq@bsse.ethz.ch" target="_blank" aria-label="Email">
+            <i class="fas fa-envelope fa-lg"></i>
+          </a>
+        </div>
+      </div>
+  </footer>
 
   <!-- External JS -->
   <script src="https://unpkg.com/@phylocanvas/phylocanvas.gl@latest/dist/bundle.min.js"></script>

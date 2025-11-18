@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <title>Phylowave</title>
 
-    <link rel="icon" href="logo/favicon/favicon-96x96.png" type="image/png">
-    <link rel="icon" type="image/png" href="logo/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="logo/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="logo/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="logo/favicon/apple-touch-icon.png" />
+    <link rel="icon" href="../../logo/favicon/favicon-96x96.png" type="image/png">
+    <link rel="icon" type="image/png" href="../logo/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../logo/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../logo/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../logo/favicon/apple-touch-icon.png" />
     
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
     
-    <link rel="stylesheet" href="css/style.css" /> <!-- my own styles -->
+    <link rel="stylesheet" href="../css/style.css" /> <!-- my own styles -->
 
     <style>
  
@@ -33,7 +33,7 @@
                class="d-flex justify-content-center align-items-center bg-white shadow rounded"
                style="height: 60px; width: 180px; position: relative;">
             <img
-              src="logo/Logo_small.png"
+              src="../logo/Logo_small.png"
               alt="Logo"
             style="height: 100%; width: 100%; object-fit: contain; position: relative" />
           </div>
@@ -42,149 +42,39 @@
       <!-- List of options --> 
       <ul class="list-unstyled px-2">
         <li class="inactive"> 
-            <a href="index.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-home"></i> Home </a> 
+            <a href="../index.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-home"></i> Home </a> 
         </li>
         <hr class="h-color mx-2">
         <li class="inactive"> 
-            <a href="get_started.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-cogs"></i> Get started </a> 
-        </li>
-        <li class="inactive"> 
-            <a href="examples.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-lightbulb"></i> Examples </a> 
+            <a href="../get_started.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-cogs"></i> Get started </a> 
         </li>
         <li class="active"> 
-            <a href="analysis.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-chart-bar"></i> Run your analysis </a> 
+            <a href="../examples.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-lightbulb"></i> Examples </a> 
+        </li>
+        <li class="inactive"> 
+            <a href="../analysis.html" class="text-decoration-none px-3 py-2 d-block"> <i class="fal fa-chart-bar"></i> Run your analysis </a> 
         </li>
       </ul>
     </div>
 
-    <!-- MAIN CONTENT AREA -->
-    <div class="content">
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="content">
       <div class="dashboard-content px-3">
           <div id="analysis-panel" class="content-panel" style="display: block; margin-top: 25px;">
-            <h2>Run your Phylowave analysis</h2>
+            <h2>Pathogen name</h2>
             <hr class="h-color mx-2">
 
-            <!-- Data input -->
-            <h4>1 - Data input</h4>
-            <p>First, drag a *timed* tree file into the box below. </p>
-            
-            <!-- Tree format and drop -->
-            <div class="drop-zone-container">
-              <div class="drop-zone-item">
-                <label for="formFormat">Tree</label>
-                <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> Format: 
-                <select id="formFormatTree">
-                    <option value="newick">Newick</option>
-                    <option value="nexus">Nexus</option>
-                    <!--<option value="phyloxml">PhyloXML</option>
-                    <option value="nexml">NeXML</option>
-                    <option value="phyjson">PhyJSON</option>-->
-                </select> </p>
-                <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> Make sure you select the right format. </p>
-                <div id="tree-drop-area">
-                  Drop tree file here
-                  <div id="tree-status-message"></div>
-                </div>
-              </div>
-
-              <!-- CSV format and drop -->
-
-              <div class="drop-zone-item">
-                <label for="formFormat">Tip metadata (optional)</label>
-                <div id="addmetadata", style="display: block; margin-top: 10px;">
-                    <button id="addMetadataBtn">Add Metadata</button>
-                </div>
-                  
-                 <div id="metadata-parser" style="display: none; margin-top: 10px;">
-                   <div class="metadata-inner">                       
-                    <div class="radio-group">
-                      <label class="radio-option">
-                        <input type="radio" name="metadataSource" value="tip">
-                        Parse from tip labels
-                      </label>
-                      <label class="radio-option">
-                        <input type="radio" name="metadataSource" value="csv">
-                        Parse from csv
-                      </label>
-                    </div>
-                    
-                    <!-- Option 1 -->
-                    <div id="metadata-option-tip">
-                        <!-- <p style="font-size: 14px; margin-top: 0px; margin-bottom: 1px;"> Option 1: Parse from tip labels </p> -->
-                        <div id="tip_name_example" style="font-size: 0.75rem; margin-bottom: 5px;"></div>
-
-                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
-                        Date format: 
-                        <select id="dateFormat">
-                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                            <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-                            <option value="Decimal">Decimal date</option>
-                        </select> 
-                        Delimiter: 
-                        <input type="text" id="tipDelimiter" placeholder="_" value="_"> 
-                        </p>
-
-                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
-                            Date location: 
-                            <input type="number" id="dateLocation" placeholder="-1" value="-1"> 
-                            Group location: 
-                            <input type="number" id="groupLocation" placeholder="-2" value="-2"> 
-                        </p>
-                        <!-- <button id="parseTipsBtn">Parse Tips</button> -->    
-                    </div>   
-
-                    <!-- Option 2 -->
-                    <div id="metadata-option-csv" style="display: none;">
-                        <!--  <p style="font-size: 14px; margin-top: 0px; margin-bottom: 1px;"> Option 2: Parse from csv </p> -->
-
-                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
-                            Date format: 
-                            <select id="dateFormatCSV">
-                                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                                <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-                                <option value="Decimal">Decimal date</option>
-                            </select> 
-                            Delimiter: 
-                            <select id="CSVDelimiter" style="width: 100px">
-                                <option value="Comma">,</option>
-                                <option value="Semicolon">;</option>
-                                <option value="Tab">\t</option>
-                                <option value="Pipe">|</option>
-                            </select>
-                        </p>
-                        
-                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
-                            Date column: 
-                            <input type="number" id="datecolumn" placeholder="2" value="2"> 
-                            Group colum: 
-                            <input type="number" id="groupcolumn" placeholder="3" value="3"> 
-                        </p>
-                        
-                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> 
-
-                        </p>
-                        <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> Make sure tip names are in the first column. </p>
-
-                        <div style="width: 100%; display: flex; justify-content: center;">
-                            <div id="csv-drop-area">
-                                Drop CSV file here
-                                <div id="csv-status-message"></div>  
-                            </div>
-                        </div>
-                    </div>
-                       
-                    <div id="parseMetadata", style="display: block; margin-top: 10px;">
-                        <button id="parseMetadataBtn">Parse metadata</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            
+              
+            Data loaded from: XX
             <br>
+            XX sequences, from XX-XX
+              
+            <br>
+            <br>
+              
             <!-- Parameters -->
-            <h4>2- Parameter input </h4>
+            <h4>Parameter </h4>
 
             <div class="form-container">
                 <!-- Input genome length  -->
@@ -253,8 +143,6 @@
     </div>
   </div>
     
-
-    
   <!-- FOOTER -->
   <footer class="custom-footer">
       <p>More on Phylowave:</p>
@@ -281,7 +169,7 @@
         </div>
       </div>
   </footer>
-
+    
   <!-- External JS -->
   <script src="https://unpkg.com/@phylocanvas/phylocanvas.gl@latest/dist/bundle.min.js"></script>
   <script src="https://unpkg.com/phylojs@latest/lib/dist/phylojs.min.js"></script>
@@ -780,9 +668,9 @@
             return groupLabels.map(group => groupToColor[group] || "#cccccc"); // fallback: grey
         }
         // Function to compute the index dynamics and plot them
-        function preprocess_tree(text_input) {  
+        function preprocess_tree(text_input, schema) {  
           // Read tree
-          const schema = document.getElementById("formFormatTree").value;
+          // const schema = document.getElementById("formFormatTree").value;
           //let tree;
           try {
               tree = phylojs.read(text_input, schema)[0];
@@ -806,67 +694,21 @@
               return;
           }
         }
-        function preprocess_metadata() {
+        function preprocess_metadata_from_csv(CSVDelimiter, groupcolumn, datecolumn, dateFormatCSV) {
           // Read metadata, if any
           let groupLabels = [];
           let collectionDates = [];
           let tips_and_nodes_ids = window.tips_and_nodes_ids;
           try {
-            const metadataSource = document.querySelector('input[name="metadataSource"]:checked')?.value;
-            window.metadataSource = metadataSource;
-            if (metadataSource === "tip") {
-                // Option 1: Parse from tip labels
-                const delimiter = document.getElementById("tipDelimiter").value;
-                const groupLoc = parseInt(document.getElementById("groupLocation").value)-1; // Because we count from 1, but javascripts counts from 0 
-                const dateLoc = parseInt(document.getElementById("dateLocation").value)-1; // Because we count from 1, but javascripts counts from 0 
-                const dateFormat = document.getElementById("dateFormat").value;
-                groupLabels = tips_and_nodes_ids.map(name => {
-                    const parts = name.split(delimiter);
-                    const index = groupLoc < 0 ? parts.length + groupLoc : groupLoc;
-                    return parts[index] ?? "Unknown";
-                });
-                collectionDates = tips_and_nodes_ids.map(name => {
-                    const parts = name.split(delimiter);
-                    const index = dateLoc < 0 ? parts.length + dateLoc : dateLoc;
-                    const raw = parts[index] ?? "";
-
-                    if (dateFormat === "Decimal") {
-                        return parseFloat(raw);
-                    } else {
-                        let dateVal = NaN;
-                        let date;
-                        if (dateFormat === "DD-MM-YYYY") {
-                        const parts = dateString.split("-");
-                          if (parts.length === 3) {
-                             const [day, month, year] = parts.map(p => parseInt(p, 10));
-                             date = new Date(Date.UTC(year, month - 1, day));
-                          }
-                        } else if (dateFormat === "YYYY-MM-DD") {
-                          // Safe parse with built-in parser
-                          date = new Date(dateString);  // Assumes YYYY-MM-DD or ISO
-                        }
-                        if (date instanceof Date && !isNaN(date)) {
-                          const year = date.getUTCFullYear();
-                          const startOfYear = new Date(Date.UTC(year, 0, 1));
-                          const endOfYear = new Date(Date.UTC(year + 1, 0, 1));
-                          const fraction = (date - startOfYear) / (endOfYear - startOfYear);
-                          dateVal = year + fraction;
-                        }
-                        return dateVal;
-                    }
-                });
-                if (collectionDates.every(val => isNaN(val))) {
-                    alert("All collection dates are NaN. Please check your metadata.");
-                }
-            } else if (metadataSource === "csv" && window.metadataTable) {
-                // Option 2: From CSV (assumes: tip, date, group)
+                // Parse CSV
                 const csvData = window.metadataTable;
                 const rows = csvData.slice(1); // skip header
                 
-                const delimiter = document.getElementById("CSVDelimiter").value;
-                const groupLoc = parseInt(document.getElementById("groupcolumn").value)-1; // Because we count from 1, but javascripts counts from 0 
-                const dateLoc = parseInt(document.getElementById("datecolumn").value)-1; // Because we count from 1, but javascripts counts from 0 
-                const dateFormat = document.getElementById("dateFormatCSV").value;
+
+                const delimiter = CSVDelimiter;
+                const groupLoc = groupcolumn-1; // Because we count from 1, but javascripts counts from 0 
+                const dateLoc = datecolumn-1; // Because we count from 1, but javascripts counts from 0 
+                const dateFormat = dateFormatCSV;
                 
                 const metadataMap = new Map(
                     rows.map(row => {
@@ -900,6 +742,7 @@
                         return [tip, { group, date: dateVal }];
                     })
                 )
+                
                 function safeGet(metadataMap, id, field, fallback) {
                   const entry = metadataMap.get(id);
                   return (entry && entry[field] !== undefined) ? entry[field] : fallback;
@@ -908,16 +751,11 @@
                 collectionDates = tips_and_nodes_ids.map(id => safeGet(metadataMap, id, 'date', NaN));
                 
                 checkUnmatchedMetadataTips(window.metadataTable, window.tips_and_nodes_ids);
-            }
           } catch (error) {
              console.warn("Metadata parsing failed:", error);
              tips_and_nodes_ids = tree.getTipLabels();
              groupLabels = tips_and_nodes_ids.map(() => "Unknown");
              collectionDates = tips_and_nodes_ids.map(() => NaN);
-          }
-          if ((metadataSource === "csv" | metadataSource === "tip") & collectionDates.every(val => isNaN(val))) {
-              alert("All collection dates are NaN. Please check metadata fields.");
-              throw new Error("All collection dates are NaN. Please check metadata fields.");
           }
       
           // Save globally if needed
@@ -938,14 +776,12 @@
               let matrix_evo_dist = computeDistancesFromTree(tree);
               
               // Scale the tree with provided dates
-              if (metadataSource === "csv" | metadataSource === "tip"){
-                  const firstValidDate = collectionDates.findIndex(d => !isNaN(d));
-                  const offset = collectionDates[firstValidDate] - tips_and_nodes[firstValidDate].height;
-                  for (let i = 0; i < tips_and_nodes.length; i++) {
-                      const node = tips_and_nodes[i];
-                      // Set new height 
-                      node.height = node.height + offset;
-                  }
+              const firstValidDate = collectionDates.findIndex(d => !isNaN(d));
+              const offset = collectionDates[firstValidDate] - tips_and_nodes[firstValidDate].height;
+              for (let i = 0; i < tips_and_nodes.length; i++) {
+                  const node = tips_and_nodes[i];
+                  // Set new height 
+                  node.height = node.height + offset;
               }
               
               // Compute heights of nodes, and a matrix of time difference, subset for the given window
@@ -994,18 +830,8 @@
               });
               
               // Helper to slice arrays based on indices
-              // const subset = (arr, indices) => indices.map(i => arr[i]);
               const elapsed = (performance.now() - startTime) / 1000;
               analysisstatusMessage.textContent = `Done, processed the ${tree.getTipLabels().length}-tip tree in ${elapsed.toFixed(1)} seconds.`;
-              //if (metadataSource === "csv" | metadataSource === "tip"){
-            //    const nanCount = subset(collectionDates, tipIndices).filter(d => isNaN(d)).length;
-              //  if(nanCount > 0){
-            //        analysiswarningMessage.textContent = 'Warning, some tips have NaN dates.'
-              //      console.log(nanCount);
-            //    }
-            //  }else{
-            //      analysiswarningMessage.textContent = 'No collection times were supplied, the root is by default at year 0.'
-             // }
                 
               window.result = result;
               window.heights = heights;
@@ -1026,9 +852,9 @@
               
               // Colours
               let colours = tips_and_nodes_ids.map(_ => "royalblue");                     
-              if (metadataSource === "tip" || metadataSource === "csv") {
+              //if (metadataSource === "tip" || metadataSource === "csv") {
                 colours = assignColoursFromGroupLabels(window.groupLabels);
-              }
+              //}
               // For the tree
               const styles_tree = {};
               tips_and_nodes_ids.forEach((id, index) => {
@@ -1118,12 +944,8 @@
                   styles: styles_tree
               });
               // Plot legend 
-              if (metadataSource === "csv" | metadataSource === "tip"){
-                 renderColorLegend(window.groupToColor);
-              } else{
-                 renderFixedLegend();
-              }
-              
+              renderColorLegend(window.groupToColor);
+
               // Plot scatter plot
               Plotly.newPlot(scatter_container, {
                     data: [
@@ -1250,29 +1072,7 @@
                   highlightPointOnPlot(nodeId, tips_and_nodes_ids); // Add this to highlight the point hovered
                   hoverLock = false;
               });
-
-              // Reset layout button
-              /*document.getElementById("resetLayoutBtn").addEventListener("click", () => { 
-                  //const plot = document.getElementById('scatter-container');
-                  const ids = window.tips_and_nodes_ids;
-                  const style = window.originalPlotStyle;
-                  if (!scatter_container || !ids || !style) return;
-
-                  Plotly.restyle(scatter_container, {
-                    'marker.color': [style.nodes.marker.color],
-                    'marker.size': [style.nodes.marker.size]
-                  },[0]);
-                  Plotly.restyle(scatter_container, {
-                    'marker.color': [style.tips.marker.color],
-                    'marker.size': [style.tips.marker.size]
-                  },[1]);
-                  Plotly.restyle(scatter_container, {
-                    x: [],
-                    y: [],
-                    //'marker.color': "white"
-                  },[2]);
-              });*/
-              
+ 
               // Download data
               document.getElementById("download-data-btn").addEventListener("click", function () {
                 // Build CSV content
@@ -1306,141 +1106,63 @@
         const analysisstatusMessage = document.getElementById("analysis-status-message");
         const analysiswarningMessage = document.getElementById("analysis-warning-message");
 
-        // Set up drag and drop for the tree
-        const dropArea = document.getElementById("tree-drop-area");
-        const treestatusMessage = document.getElementById("tree-status-message");
-        ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
-            dropArea.addEventListener(eventName, (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }, false);
-        });
-        dropArea.addEventListener("drop", (e) => {
-          const files = e.dataTransfer.files;
-
-          if (files.length > 0) {
-              const file = files[0];
-              const reader = new FileReader();
-
-              reader.onload = function(event) {
-                  treeText = event.target.result;
-                  dropArea.innerHTML = ""; // Clear drop message
-                  dropArea.textContent = "Tree loaded.";
-                  dropArea.style.color = "green";
-            
-                  try {
-                    const schema = document.getElementById("formFormatTree").value;
-                    let tree = phylojs.read(treeText, schema)[0];
-                    const example_tips = tree.getTipLabels()[1];
-                    window.tree = tree; // save globally
-                    window.example_tips = example_tips; // save globally
-                  } catch (error) {
-                    console.warn(error);
-                    alert("Cannot read tree. Please check format.");
-                  }
-              };
-              reader.readAsText(file);
-          }
+        // Load tree - modify path and format
+        window.addEventListener("DOMContentLoaded", () => {
+          fetch('https://raw.githubusercontent.com/noemielefrancq/phylowave.github.io/main/example_data/Example_BP.newick')
+            .then(response => response.text())
+            .then(treeText => {
+              try {
+                const schema = "newick";
+                const tree = phylojs.read(treeText, schema)[0];
+                const example_tips = tree.getTipLabels()[1];
+                window.treeText = treeText;
+                window.tree = tree;
+                window.example_tips = example_tips;
+                window.schema = schema;
+                console.log(tree);
+              } catch (error) {
+                console.warn("Error reading example tree:", error);
+              }
+            })
+            .catch(error => {
+              console.error("Failed to load example tree:", error);
+            });
         });
         
-        // 'Activate' metadata field
-        document.getElementById("addMetadataBtn").addEventListener("click", () => {
-            const addmetadataBtnDiv = document.getElementById("addmetadata");
-            const parserDiv = document.getElementById("metadata-parser");
-            const tip_name_example = document.getElementById("tip_name_example");
-            if (window.tree === undefined) {
-                alert("No tree loaded. Please load a tree first.");
-            }else {
-                try {
-                    tip_name_example.innerHTML = ""; // Clear drop message
-                    tip_name_example.textContent = `Example of tip name: "${window.example_tips}"` ;  
-                    parserDiv.style.display = "block";
-                    addmetadataBtnDiv.style.display = "none";
-                } catch (error) {
-                    console.warn(error);
-                    alert("No tree loaded. Please load a tree first.");
-                }
-            }
-        }); 
+        // Load metadata
+        window.addEventListener("DOMContentLoaded", () => {
+          fetch('https://raw.githubusercontent.com/noemielefrancq/phylowave.github.io/main/example_data/Example_BP.csv')
+            .then(response => response.text())
+            .then(csvText => {
+              const delimiter = ","; // or set based on assumptions
+              const parsedData = parseCSV(csvText, delimiter);
 
-        // Toggle between metadata input methods
-        const tipOption = document.getElementById("metadata-option-tip");
-        const csvOption = document.getElementById("metadata-option-csv");
-        document.querySelectorAll('input[name="metadataSource"]').forEach((radio) => {
-            radio.addEventListener("change", (e) => {
-                if (e.target.value === "tip") {
-                    tipOption.style.display = "block";
-                    csvOption.style.display = "none";
-                } else {
-                    tipOption.style.display = "none";
-                    csvOption.style.display = "block";
+              if (parsedData.length === 0 || parsedData[0].length <= 1) {
+                console.warn("CSV file appears to be improperly formatted.");
+                return;
+              }
 
-                }
+              window.metadataTable = parsedData;
+              console.log(metadataTable);
+            })
+            .catch(error => {
+              console.error("Failed to load metadata CSV:", error);
             });
-        }); 
-            
-        // Set up metadata field
-        const csvDropArea = document.getElementById("csv-drop-area");
-        const csvstatusMessage = document.getElementById("csv-status-message");
-        ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
-            csvDropArea.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-            }, false);
-        });
-        csvDropArea.addEventListener("drop", (e) => {
-            const files = e.dataTransfer.files;
-
-            if (files.length > 0) {
-            const file = files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                const csvText = event.target.result;
-
-                // Get selected format
-                const format = document.getElementById("CSVDelimiter").value;
-
-                // Determine delimiter
-                let delimiter = ",";
-                switch (format) {
-                    case "Semicolon": delimiter = ";"; break;
-                    case "Tab": delimiter = "\t"; break;
-                    case "Pipe": delimiter = "|"; break;
-                }
-
-                // Parse the CSV using the selected delimiter
-                const parsedData = parseCSV(csvText, delimiter);
-
-                if (parsedData.length === 0 || parsedData[0].length <= 1) {
-                    alert("CSV file appears to be improperly formatted. Please check the delimiter.");
-                    return;
-                }else{
-                    csvDropArea.innerHTML = ""; // Clear drop message
-                    csvDropArea.textContent = "CSV loaded.";
-                    csvDropArea.style.color = "green";
-                }
-
-                // Save globally if needed
-                window.metadataTable = parsedData;
-            };
-
-            reader.readAsText(file);
-            }
         });
       
         let result;
         let heights;
         // Connect Run button
         document.getElementById("runBtn").addEventListener("click", () => {
+            treeText = window.treeText;
             if (!treeText) {
                 alert("Please drop a tree file first!");
                 return;
             }
 
             setTimeout(() => {
-                preprocess_tree(treeText);
-                preprocess_metadata();
+                preprocess_tree(treeText, window.schema);
+                preprocess_metadata_from_csv(',', 6, 3, 'Decimal'); // CSVDelimiter, groupcolumn, datecolumn, dateFormatCSV
             }, 0);
             
             analysisstatusMessage.innerHTML = `<span class="spinner"></span> Processing...`;
@@ -1452,17 +1174,8 @@
             }, 0);
         });
       
-        // Connect parse metadata button
-        document.getElementById("parseMetadataBtn").addEventListener("click", () => {
-            let result = window.result;
-            if (result) {
-                setTimeout(() => {
-                    preprocess_metadata();
-                    plotresult();
-                }, 0);
-            }
-        });
     </script>
+    
     
 </body>
     
