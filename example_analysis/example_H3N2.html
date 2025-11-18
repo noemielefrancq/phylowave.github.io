@@ -80,28 +80,28 @@
                 <!-- Input genome length  -->
                 <div class="form-group">
                     <label for="genomelength">Genome length:</label>
-                    <input type="number" id="genomelength" name="genomelength" min="1" max="1000000000" step="100" value="1E6" />
+                    <input type="number" id="genomelength" name="genomelength" min="1" max="1000000000" step="100" value="1701" />
                     <p style="font-size: 12px;"> Unit: number of base pairs </p>
                 </div>
 
                 <!-- Input subtitution rate  -->
                 <div class="form-group">
                     <label for="substitution_rate">Substitution rate:</label>
-                    <input type="number" id="substitution_rate" name="substitution_rate" min="0" max="1" step="0.01" value="1E-5" />
+                    <input type="number" id="substitution_rate" name="substitution_rate" min="0" max="1" step="0.01" value="3.82e-03" />
                     <p style="font-size: 12px;"> Unit: substitutions per base pair per year </p>
                 </div>
                 
                 <!-- Input timescale  -->
                 <div class="form-group">
                     <label for="Timescale">Timescale:</label>
-                    <input type="number" id="Timescale" name="Timescale" min="0" max="100" step="0.01" value="0.5" />
+                    <input type="number" id="Timescale" name="Timescale" min="0" max="100" step="0.01" value="0.1" />
                     <p style="font-size: 12px;"> Unit: years </p>
                 </div>
                 
                 <!-- Input window  -->
                 <div class="form-group">
                     <label for="window">Window:</label>
-                    <input type="number" id="window" name="window" min="0" max="100" step="0.25" value="1" />
+                    <input type="number" id="window" name="window" min="0" max="100" step="0.25" value="0.25" />
                      <p style="font-size: 12px;"> Unit: years </p>
                 </div>
             </div>
@@ -426,7 +426,7 @@
               }
 
               // Brent’s method-style 1D bounded search
-              const steps = 100000;  // High resolution
+              const steps = 100000000;  // High resolution
               let b_opt = lower;
               let bestVal = objFun(lower);
 
