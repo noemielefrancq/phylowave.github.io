@@ -75,10 +75,10 @@
                 <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> Format: 
                 <select id="formFormatTree">
                     <option value="newick">Newick</option>
-                    <option value="nexus">Nexus</option>
-                    <!--<option value="phyloxml">PhyloXML</option>
-                    <option value="nexml">NeXML</option>
-                    <option value="phyjson">PhyJSON</option>-->
+                    <!--<option value="nexus">Nexus</option>
+                    <option value="phyjson">PhyJSON</option>
+                    <option value="phyloxml">PhyloXML</option>
+                    <option value="nexml">NeXML</option>-->
                 </select> </p>
                 <p style="font-size: 12px; margin-top: 0px; margin-bottom: 1px;"> Make sure you select the right format. </p>
                 <div id="tree-drop-area">
@@ -1011,6 +1011,33 @@
               window.heights = heights;
               window.ladderisednewickText = ladderisednewickText;
         }        
+      
+      function convertNexusTaxlabelsToNames(nexusText) {
+  // Extract taxlabels block
+  const taxMatch = nexusText.match(/taxlabels\s+([^;]+);/i);
+  if (!taxMatch) return nexusText; // no change if not found
+
+  const taxlabels = taxMatch[1]
+    .trim()
+    .split(/\s+/)
+    .map(label => label.replace(/^'+|'+$/g, '')); // remove optional quotes
+
+  // Extract tree line
+  const treeMatch = nexusText.match(/tree\s+\S+\s*=\s*(\[.*\])?\s*(.+);/i);
+  if (!treeMatch) return nexusText;
+
+  const newickPart = treeMatch[2].trim();
+
+  // Replace numbered tips with taxlabels
+  const newickWithLabels = newickPart.replace(/\b\d+\b/g, token => {
+    const idx = parseInt(token, 10);
+    return taxlabels[idx - 1] || token;
+  });
+
+  // Replace tree in original Nexus text
+  const newText = nexusText.replace(newickPart, newickWithLabels);
+  return newText;
+}
         function plotresult(){
               let result = window.result;
               let heights = window.heights;
@@ -1330,7 +1357,15 @@
             
                   try {
                     const schema = document.getElementById("formFormatTree").value;
-                    let tree = phylojs.read(treeText, schema)[0];
+                    if(schema === "newick"){
+                        let tree = phylojs.readNewick(treeText);
+                    }else if (schema === "nexus"){
+                        //let treeTextFixed = convertNexusTaxlabelsToNames(treeText);
+                        let tree = phylojs.readNewick(treeText);
+                        console.log(tree);
+                    }else if (schema === "phyjson"){
+                        let tree = phylojs.readPhyJSON(treeText);
+                    }
                     const example_tips = tree.getTipLabels()[1];
                     window.tree = tree; // save globally
                     window.example_tips = example_tips; // save globally
