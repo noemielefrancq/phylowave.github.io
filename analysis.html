@@ -1358,7 +1358,7 @@
                   try {
                     const schema = document.getElementById("formFormatTree").value;
                     if(schema === "newick"){
-                        let tree = phylojs.readNewick(treeText);
+                        let tree = phylojs.read(text_input, schema)[0];
                     }else if (schema === "nexus"){
                         //let treeTextFixed = convertNexusTaxlabelsToNames(treeText);
                         let tree = phylojs.readNewick(treeText);
