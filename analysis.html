@@ -1357,14 +1357,15 @@
             
                   try {
                     const schema = document.getElementById("formFormatTree").value;
+                    console.log(schema);
+                    let tree;
                     if(schema === "newick"){
-                        let tree = phylojs.read(treeText, schema)[0];
+                        tree = phylojs.readTreesFromNewick(treeText)[0];
                     }else if (schema === "nexus"){
                         //let treeTextFixed = convertNexusTaxlabelsToNames(treeText);
-                        let tree = phylojs.readNewick(treeText);
-                        console.log(tree);
+                        tree = phylojs.readNewick(treeText);
                     }else if (schema === "phyjson"){
-                        let tree = phylojs.readPhyJSON(treeText);
+                        tree = phylojs.readPhyJSON(treeText);
                     }
                     const example_tips = tree.getTipLabels()[1];
                     window.tree = tree; // save globally
